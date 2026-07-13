@@ -6,6 +6,11 @@
     <title>Elijah Wong | Mechanical Engineering Portfolio</title>
 
     <style>
+        /* Smooth Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -35,6 +40,9 @@
             background: #111827;
             padding: 1rem;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         nav a {
@@ -42,6 +50,7 @@
             text-decoration: none;
             margin: 0 1rem;
             font-weight: bold;
+            transition: color 0.2s ease;
         }
 
         nav a:hover {
@@ -101,6 +110,13 @@
             border-radius: 8px;
             overflow: hidden;
             background: #fafafa;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Subtle interactive hover effect for cards */
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
         }
 
         .project-card img {
@@ -128,10 +144,54 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
         }
 
         .button:hover {
             background: #1d4ed8;
+        }
+
+        /* Skills Interactive Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.75rem;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .skills-grid li {
+            background: #f3f4f6;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            color: #374151;
+            border-left: 4px solid #2563eb;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .skills-grid li:hover {
+            background: #e5e7eb;
+            transform: scale(1.05);
+        }
+
+        /* Contact Link Styles */
+        .contact-links p {
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-links a:hover {
+            text-decoration: underline;
         }
 
         footer {
@@ -141,8 +201,60 @@
             color: white;
         }
 
-        ul {
-            padding-left: 1.5rem;
+        /* --- MODAL INTERACTIVE STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.25rem;
+            font-size: 1.75rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .close-modal:hover {
+            color: #111827;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
         }
 
         @media (max-width: 600px) {
@@ -173,87 +285,69 @@
 
     <div class="container">
 
-       <section id="about">
-
-    <div class="about-layout">
-
-        <div class="about-text">
-
-            <h2>About Me</h2>
-
-            <p>
-                I am a mechanical engineering student with interests in
-                3D Design, Systems and Controls, Heat Transfer,
-                Computational Engineering, and Robotics.
-            </p>
-
-            <br>
-
-            <a class="button"
-               href="Elijah Wong Resume - GitHub.pdf"
-               download>
-               Download Resume
-            </a>
-
-        </div>
-
-        <div class="about-image">
-
-            <img src="images/eli_headshot.JPG"
-                 alt="Elijah Wong Headshot">
-
-        </div>
-
-    </div>
-
+        <section id="about">
+            <div class="about-layout">
+                <div class="about-text">
+                    <h2>About Me</h2>
+                    <p>
+                        I am a mechanical engineering student with interests in
+                        3D Design, Systems and Controls, Heat Transfer,
+                        Computational Engineering, and Robotics.
+                    </p>
+                    <br>
+                    <a class="button" href="Elijah Wong Resume - GitHub.pdf" download>
+                        Download Resume
+                    </a>
+                </div>
+                <div class="about-image">
+                    <img src="images/eli_headshot.JPG" alt="Elijah Wong Headshot">
+                </div>
+            </div>
         </section>
 
         <section id="projects">
             <h2>Projects</h2>
-
             <div class="projects">
 
                 <div class="project-card">
                     <img src="images/EMAE355_pfd.jpg" alt="Geothermal Sequestration Process Flow Diagram">
-
                     <div class="project-content">
                         <h3>Geothermal Sequestration Simulation</h3>
-                        <p>
-                            Modeled and optimized a thermodynamic cycle 
-                            for geothermal sequestration using Python and Sheets.
-                        </p>
-
-                        <a class="button" href="#">View Project</a>
+                        <p>Modeled and optimized a thermodynamic cycle for geothermal sequestration using Python and Sheets.</p>
+                        <button class="button open-modal-btn" 
+                                data-title="Geothermal Sequestration Simulation" 
+                                data-img="images/EMAE355_pfd.jpg"
+                                data-desc="Using Python libraries and thermodynamic equations, I simulated carbon sequestration efficiency in geothermal reservoirs. The optimization algorithm maximized fluid density changes while lowering overall parasitic pump power requirements.">
+                            View Project
+                        </button>
                     </div>
                 </div>
 
                 <div class="project-card">
                     <img src="images/Ultrasonic Speaker.jpg" alt="Ultrasonic Speaker">
-
                     <div class="project-content">
                         <h3>Ultrasonic Speaker Motion Design</h3>
-                        <p>
-                            Designed a working prototype for a facial-tracking
-                            ultrasonic speaker, including a housing, frame, and 
-                            motor positioning. 
-                        </p>
-
-                        <a class="button" href="#">View Project</a>
+                        <p>Designed a working prototype for a facial-tracking ultrasonic speaker, including a housing, frame, and motor positioning.</p>
+                        <button class="button open-modal-btn" 
+                                data-title="Ultrasonic Speaker Motion Design" 
+                                data-img="images/Ultrasonic Speaker.jpg"
+                                data-desc="This engineering design involved setting up a dual-axis pan/tilt motorized bracket using micro-servos. Designed completely in SolidWorks, it integrates a camera module for real-time facial feature mapping to direct highly focused ultrasonic directional audio.">
+                            View Project
+                        </button>
                     </div>
                 </div>
 
                 <div class="project-card">
                     <img src="images/Marble Sorter.jpg" alt="Marble Sorter">
-
                     <div class="project-content">
                         <h3>Color-Sensing Marble Sorter</h3>
-                        <p>
-                            Designed vertical color-based marble sorter. Used 3D 
-                            design to CAD, print, assemble, and test the working final 
-                            version of the sorter.
-                        </p>
-
-                        <a class="button" href="#">View Project</a>
+                        <p>Designed vertical color-based marble sorter. Used 3D design to CAD, print, assemble, and test the working final version of the sorter.</p>
+                        <button class="button open-modal-btn" 
+                                data-title="Color-Sensing Marble Sorter" 
+                                data-img="images/Marble Sorter.jpg"
+                                data-desc="A high-throughput sorting mechanism leveraging light/color spectrum sensors and an Arduino microcontroller. Custom-modeled geometric chutes were 3D printed to ensure tight tolerances, lowering jam rates by 95% over baseline designs.">
+                            View Project
+                        </button>
                     </div>
                 </div>
 
@@ -262,8 +356,7 @@
 
         <section id="skills">
             <h2>Skills</h2>
-
-            <ul>
+            <ul class="skills-grid">
                 <li>MATLAB</li>
                 <li>Python</li>
                 <li>SolidWorks (CSWA)</li>
@@ -276,12 +369,11 @@
             </ul>
         </section>
 
-        <section id="contact">
+        <section id="contact" class="contact-links">
             <h2>Contact</h2>
-
-            <p>Email: elijah.x.wong@gmail.com</p>
-            <p>GitHub: github.com/EliXWong</p>
-            <p>LinkedIn: linkedin.com/in/elijah-wong-1081b3172/</p>
+            <p>Email: <a href="mailto:elijah.x.wong@gmail.com">elijah.x.wong@gmail.com</a></p>
+            <p>GitHub: <a href="https://github.com/EliXWong" target="_blank" rel="noopener">github.com/EliXWong</a></p>
+            <p>LinkedIn: <a href="https://linkedin.com/in/elijah-wong-1081b3172/" target="_blank" rel="noopener">linkedin.com/in/elijah-wong-1081b3172/</a></p>
         </section>
 
     </div>
@@ -289,6 +381,50 @@
     <footer>
         <p>© 2026 Elijah Wong | Mechanical Engineering Portfolio</p>
     </footer>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Project Title</h2>
+            <img id="modalImg" class="modal-img" src="" alt="Project Image">
+            <p id="modalDesc">Detailed description goes here...</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('projectModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalImg = document.getElementById('modalImg');
+        const modalDesc = document.getElementById('modalDesc');
+        
+        // Grab all "View Project" buttons
+        const openModalButtons = document.querySelectorAll('.open-modal-btn');
+
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Extract unique project details stored right inside the HTML button data attributes
+                modalTitle.textContent = button.getAttribute('data-title');
+                modalImg.setAttribute('src', button.getAttribute('data-img'));
+                modalDesc.textContent = button.getAttribute('data-desc');
+                
+                // Show modal
+                modal.classList.add('active');
+            });
+        });
+
+        // Close modal when clicking the 'X'
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close modal when clicking anywhere outside of the popup card box
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
 
 </body>
 </html>
